@@ -1,0 +1,19 @@
+{
+    "name": "donizete/conversor-real-dolar",
+    "description": "Conversor de moeda",
+    "require": {
+        "skoro/tkui": "dev-master"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Donizete"
+        }
+    ],
+    "minimum-stability": "dev"
+}
