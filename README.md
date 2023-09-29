@@ -8,7 +8,7 @@ Desktop app criado com php usando skoro/tkui.
 * Extensão `ffi` precisa estar habilitada
 * Tcl/Tk >= 8.6
 
-<p align="center"><img src="/img/interface.png"></p>
+![Conversor simple de real para dolar!](/img/interface.jpg "Desktop app com php")
 
 ### Getting started
 
