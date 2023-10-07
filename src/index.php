@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use src\AwesomeAPI;
+use src\Operations;
 use Tkui\DotEnv;
 use Tkui\Layouts\Pack;
 use Tkui\TclTk\TkAppFactory;
@@ -15,17 +16,6 @@ use Tkui\Widgets\Frame;
 use Tkui\Widgets\Label;
 use Tkui\Widgets\LabelFrame;
 use Tkui\Windows\MainWindow;
-
-function realToDolar(string $real, Label $dolarLabel): void
-{
-    if (!is_numeric($real)) {
-        return;
-    }
-    $dolarLabel->text = '$' . (string)round(
-        ((float)$real / (float)(new AwesomeAPI())->contacaoDoDolarHoje()['high']),
-        2
-    );
-}
 
 const APP_NAME = 'PHPUI';
 const APP_FONT = new TkFont('Helvetica', 11, TkFont::STYLE_REGULAR);
@@ -65,7 +55,11 @@ $labelFrameConverter->pack(
 
 $buttonFrame = new Frame($mainWindow);
 $converterButton = new Button($labelFrameConverter, 'CONVERTER');
-// $converterButton->onClick(fn () => realToDolar($realEntry->getValue(), $dolarLabel));
+$converterButton->onClick(
+    fn () => (new Operations(
+        $realEntry->getValue()
+    ))->transformarValoRealParaDolar($dolarLabel)
+);
 $buttonFrame->pack(
     $converterButton,
     ['padx' => 5, 'pady' => 5, 'ipadx' => 3, 'ipady' => 3, 'anchor' => 'e']
