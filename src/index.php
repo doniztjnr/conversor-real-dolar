@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use src\Moeda;
+use src\AwesomeAPI;
 use Tkui\DotEnv;
 use Tkui\Layouts\Pack;
 use Tkui\TclTk\TkAppFactory;
@@ -22,7 +22,7 @@ function realToDolar(string $real, Label $dolarLabel): void
         return;
     }
     $dolarLabel->text = '$' . (string)round(
-        ((float)$real / (float)(new Moeda())->USDBRL()['high']),
+        ((float)$real / (float)(new AwesomeAPI())->contacaoDoDolarHoje()['high']),
         2
     );
 }
@@ -39,12 +39,14 @@ $labelDolar = new Label($labelFrameInfo, 'Dolar - $1.00');
 $labelDolar->font = APP_FONT;
 $labelReal = new Label(
     $labelFrameInfo,
-    'Real - R$' . (new Moeda())->USDBRL()['high']
+    'Real - R$' . (new AwesomeAPI())->contacaoDoDolarHoje()['high']
 );
 $labelReal->font = APP_FONT;
 $labelFrameInfo->pack(
-    [$labelDolar,
-    $labelReal],
+    [
+        $labelDolar,
+        $labelReal
+    ],
     ['padx' => 5, 'pady' => 5, 'anchor' => 'w']
 );
 
@@ -54,22 +56,27 @@ $realEntry->font = APP_FONT;
 $dolarLabel = new Label($labelFrameConverter, '');
 $dolarLabel->font = APP_FONT;
 $labelFrameConverter->pack(
-    [$realEntry,
-    $dolarLabel],
+    [
+        $realEntry,
+        $dolarLabel
+    ],
     ['padx' => 5, 'pady' => 5, 'ipadx' => 3, 'ipady' => 3]
 );
 
 $buttonFrame = new Frame($mainWindow);
 $converterButton = new Button($labelFrameConverter, 'CONVERTER');
-$converterButton->onClick(fn () => realToDolar($realEntry->getValue(), $dolarLabel));
+// $converterButton->onClick(fn () => realToDolar($realEntry->getValue(), $dolarLabel));
 $buttonFrame->pack(
     $converterButton,
     ['padx' => 5, 'pady' => 5, 'ipadx' => 3, 'ipady' => 3, 'anchor' => 'e']
 );
 
 $mainWindow->pack(
-    [$labelFrameInfo, $labelFrameConverter,
-    $buttonFrame],
+    [
+        $labelFrameInfo,
+        $labelFrameConverter,
+        $buttonFrame
+    ],
     ['padx' => 5, 'pady' => 2, 'fill' => Pack::FILL_X]
 );
 $app->run();
